@@ -1,7 +1,9 @@
 name: slide-image-from-template
 version: 0.1.0
-description: Generate a single slide-like image using gpt-image-1.5 and a template image.
+description: Generate a single slide-like image from a template using OpenAI or Gemini.
 dependencies:
   python:
     - "python>=3.10"
     - "pip"
+  node:
+    - "node>=18"

@@ -16,6 +16,7 @@ description: >
 
 ## 出力
 - PNG画像（デフォルト: ./out/slide.png）
+- `--provider both` 時は `./out/slide.openai.png` と `./out/slide.gemini.png`
 
 # 実行の流れ
 1. ユーザーのテキストを「タイトル + 要点（3〜6個）」程度に要約し、情報量を整える
@@ -41,12 +42,25 @@ scripts/run_from_input.sh
 scripts/run_from_input.sh ./my_input.md
 ```
 
+```bash
+# Geminiで生成
+scripts/run_from_input.sh ./my_input.md --provider gemini
+```
+
+```bash
+# OpenAI/Geminiを同時生成して比較
+scripts/run_from_input.sh ./my_input.md --provider both --out ./out/slide.png
+```
+
 - 既定入力: `./input.txt`
 - 既定テンプレ: `./assets/template.png`
 - 既定出力: `./out/slide.png`
 - 入力は `--input ./path/to/file` または位置引数 `scripts/run_from_input.sh ./path/to/file` で上書き可能
-- 依存（`openai`, `pillow`）が無ければ自動で `pip install --user -r requirements.txt` を実行
-- `OPENAI_API_KEY` は環境変数、または `./.env`（`OPENAI_API_KEY=...`）で指定可能
+- プロバイダは `--provider openai|gemini|both`（既定: `openai`）
+- OpenAI選択時、依存（`openai`, `pillow`）が無ければ自動で `pip install --user -r requirements.txt` を実行
+- APIキーは環境変数、または `./.env` で指定可能
+  - OpenAI: `OPENAI_API_KEY=...`
+  - Gemini: `GEMINI_API_KEY=...`
 
 ## 1) 直接テキスト指定
 python scripts/render_slide.py \
@@ -68,6 +82,6 @@ python scripts/render_slide.py \
 - スライドではなく写真/イラスト生成が主目的
 
 # 注意
-- OPENAI_API_KEY を環境変数に設定してください
+- OpenAI使用時は `OPENAI_API_KEY`、Gemini使用時は `GEMINI_API_KEY` を設定してください
 - 出力サイズは API の制約により固定候補から選びます（生成後にクロップで 16:9 を作ります）
-- `api.openai.com` への名前解決ができない環境（DNS/ネットワーク制限）では生成できません
+- DNS/ネットワーク制限環境では API 呼び出しに失敗します（OpenAI: `api.openai.com` / Gemini: `generativelanguage.googleapis.com`）
