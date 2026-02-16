@@ -40,6 +40,16 @@ GEMINI_API_KEY=your_gemini_api_key
 - OpenAIだけ使うなら `OPENAI_API_KEY` のみでOK
 - Geminiだけ使うなら `GEMINI_API_KEY` のみでOK
 
+## requirements.txt について
+
+- OpenAI利用時は `requirements.txt`（`openai`, `pillow`）が必要です
+- `scripts/run_from_input.sh` は不足時に自動インストールします（`--no-install` 未指定時）
+- 手動で入れる場合:
+
+```bash
+python3 -m pip install -r requirements.txt
+```
+
 ## 最短で使う
 
 ### 1) 入力テキストを用意
